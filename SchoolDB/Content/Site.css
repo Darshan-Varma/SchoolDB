@@ -6,6 +6,7 @@
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
+    margin-top: 15px;
     padding-right: 15px;
 }
 
@@ -20,4 +21,42 @@ textarea {
 .navbar-inverse .navbar-toggle:focus {
     background-color: #777;
     border-color: #fff
+}
+
+a.navlink {
+    color: red;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+nav {
+    margin-bottom: 15px;
+}
+
+a.navlink.dellink {
+    position: absolute;
+    right: 25%;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.AddTeacherForm input {
+    max-width: 280px;
+    margin-bottom: 10px;
+    display: block;
+    width: 200px;
+}
+
+.AddTeacherForm input[type="submit"] {
+    margin-top: 20px;
+    padding: 3px;
 }
