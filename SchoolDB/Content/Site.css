@@ -45,18 +45,23 @@ a.navlink.dellink {
     right: 25%;
 }
 
+a.navlink.updatelink {
+    position: absolute;
+    right: 32%;
+}
+
 h2 {
     margin-bottom: 20px;
 }
 
-.AddTeacherForm input {
+.AddTeacherForm,.UpdateTeacher input {
     max-width: 280px;
     margin-bottom: 10px;
     display: block;
     width: 200px;
 }
 
-.AddTeacherForm input[type="submit"] {
+.AddTeacherForm,.UpdateTeacher input[type="submit"] {
     margin-top: 20px;
     padding: 3px;
 }

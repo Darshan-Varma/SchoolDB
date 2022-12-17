@@ -124,7 +124,7 @@ namespace SchoolDB.Controllers
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = (DateTime.Parse(HireDate)).ToShortDateString();
+                NewTeacher.HireDate = Convert.ToDateTime(HireDate).ToString("yyyy/MM/dd");
                 NewTeacher.TeacherSalary = TeacherSalary;
                 if (courseName == String.Empty)
                     NewTeacher.CourseName = "No subject";
@@ -212,6 +212,54 @@ namespace SchoolDB.Controllers
             }
             Conn.Close();
 
+
+
+        }
+
+        /// <summary>
+        /// Updates an Teacher on the MySQL Database. Non-Deterministic.
+        /// </summary>
+        /// <param name="TeacherInfo">An object with fields that map to the columns of the teacher's table.</param>
+        /// <example>
+        /// POST api/TeacherData/UpdateTeacher/208 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFname":"Christine",
+        ///	"TeacherLname":"Bittle",
+        ///	"EmployeeNumber":"T606",
+        ///	"HireDate":"2016-04-03",
+        ///	"TeacherSalary":"74.34"
+        /// }
+        /// </example>
+        [HttpPost]
+        public void UpdateTeacher(int id, [FromBody] Teacher TeacherInfo)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Using server side validation. Block update if any data is missing.
+            if (!string.IsNullOrEmpty(TeacherInfo.TeacherFname) && !string.IsNullOrEmpty(TeacherInfo.TeacherLname) && !string.IsNullOrEmpty(TeacherInfo.EmployeeNumber) && !string.IsNullOrEmpty(TeacherInfo.HireDate) && !string.IsNullOrEmpty(TeacherInfo.TeacherSalary)) {
+
+                //Open the connection between the web server and database
+                Conn.Open();
+
+                //Establish a new command (query) for our database
+                MySqlCommand cmd = Conn.CreateCommand();
+
+                //SQL QUERY
+                cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeMumber, hiredate=@HireDate,salary=@TeacherSalary where teacherid=@TeacherId";
+                cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFname);
+                cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLname);
+                cmd.Parameters.AddWithValue("@EmployeeMumber", TeacherInfo.EmployeeNumber);
+                cmd.Parameters.AddWithValue("@HireDate", TeacherInfo.HireDate);
+                cmd.Parameters.AddWithValue("@TeacherSalary", TeacherInfo.TeacherSalary);
+                cmd.Parameters.AddWithValue("@TeacherId", id);
+                cmd.Prepare();
+
+                cmd.ExecuteNonQuery();
+
+                Conn.Close();
+            }
 
 
         }
